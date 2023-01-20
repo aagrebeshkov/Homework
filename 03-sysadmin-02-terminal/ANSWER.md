@@ -29,20 +29,20 @@
 	<details>
 	<summary>Ответ</summary>
 
-	Команда cd - встроенная команда оболочки bash.
-	Проверить можно командой:
-	$ type cd
-	cd is a shell builtin
-	
-	команды могут быть:
-	Внутренняя команда оболочки
-	Внешняя команда / исполняемый файл
-	Функция оболочки
-	Алиас
-	Ключевое слово
-	
-	Я считаю, что cd может быть только внутренней командой оболочки.
-	Потому что без перехода по директориям не получилось бы работать с системой до установки дополнительных пакетов.
+		Команда cd - встроенная команда оболочки bash.
+		Проверить можно командой:
+		$ type cd
+		cd is a shell builtin
+		
+		команды могут быть:
+		Внутренняя команда оболочки
+		Внешняя команда / исполняемый файл
+		Функция оболочки
+		Алиас
+		Ключевое слово
+		
+		Я считаю, что cd может быть только внутренней командой оболочки.
+		Потому что без перехода по директориям не получилось бы работать с системой до установки дополнительных пакетов.
 
 	</details>
 
@@ -61,7 +61,7 @@
 	<details>
 	<summary>Ответ</summary>
 
-	grep -c <some_string> <some_file>
+		grep -c <some_string> <some_file>
 
 	</details>
 
@@ -71,7 +71,7 @@
 	<details>
 	<summary>Ответ</summary>
 
-	/sbin/init
+		/sbin/init
 
 	</details>
 
@@ -81,7 +81,7 @@
 	<details>
 	<summary>Ответ</summary>
 
-	ls 2>/dev/pts/1
+		ls 2>/dev/pts/1
 
 	</details>
 
@@ -91,18 +91,18 @@
 	<details>
 	<summary>Ответ</summary>
 
-	exec 5<&0			# Связать дескр. #5 со stdin
-	exec 4>&1			# Связать дескр. #4 со stdout
-	exec 0< testfile
-	exec > logfile.txt
-	count=1
-	while read line
-	do
-		echo "Line #$count: $line"
-		count=$(( $count + 1 ))
-	done
-	exec 0<&5			# Восстановить stdin и закрыть дескр. #5
-	exec 1>&4 4>&-		# Восстановить stdout и закрыть дескр. #4
+		exec 5<&0			# Связать дескр. #5 со stdin
+		exec 4>&1			# Связать дескр. #4 со stdout
+		exec 0< testfile
+		exec > logfile.txt
+		count=1
+		while read line
+		do
+			echo "Line #$count: $line"
+			count=$(( $count + 1 ))
+		done
+		exec 0<&5			# Восстановить stdin и закрыть дескр. #5
+		exec 1>&4 4>&-		# Восстановить stdout и закрыть дескр. #4
 
 	</details>
 
@@ -112,8 +112,8 @@
 	<details>
 	<summary>Ответ</summary>
 
-	Можно вывести перенаправив выаод команды в /dev/tty*
-	Например: echo 123 > /dev/tty0
+		Можно вывести перенаправив выаод команды в /dev/tty*
+		Например: echo 123 > /dev/tty0
 
 	</details>
 
@@ -123,23 +123,23 @@
 	<details>
 	<summary>Ответ</summary>
 
-	Если выполнить команду 'bash 5>&1', но откроется декриптор 5 и перенаправится в stdout:
-	$ echo $$
-	1591
-	
-	$ ls -l /proc/1591/fd
-	total 0
-	lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 0 -> /dev/pts/0
-	lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 1 -> /dev/pts/0
-	lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 2 -> /dev/pts/0
-	lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 255 -> /dev/pts/0
-	lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 5 -> /dev/pts/0
-	
-	Если выполнить команду 'echo netology > /proc/$$/fd/5', то выведется "netology":
-	$ echo netology > /proc/$$/fd/5
-	netology
-	
-	Выведется netology, т.к. мы слово netology отправили на 5 поток, который перенаправлен в 1 (стандартный вывод).
+		Если выполнить команду 'bash 5>&1', но откроется декриптор 5 и перенаправится в stdout:
+		$ echo $$
+		1591
+		
+		$ ls -l /proc/1591/fd
+		total 0
+		lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 0 -> /dev/pts/0
+		lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 1 -> /dev/pts/0
+		lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 2 -> /dev/pts/0
+		lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 255 -> /dev/pts/0
+		lrwx------ 1 vagrant vagrant 64 Jan 19 18:30 5 -> /dev/pts/0
+		
+		Если выполнить команду 'echo netology > /proc/$$/fd/5', то выведется "netology":
+		$ echo netology > /proc/$$/fd/5
+		netology
+		
+		Выведется netology, т.к. мы слово netology отправили на 5 поток, который перенаправлен в 1 (стандартный вывод).
 
 	</details>
 
@@ -151,11 +151,11 @@
 	<details>
 	<summary>Ответ</summary>
 
-	$ cat file_test
-	cat: file_test: No such file or directory
-	
-	$ cat file_test 4>&1 1>&2 2>&4 | grep 'No such'
-	cat: file_test: No such file or directory
+		$ cat file_test
+		cat: file_test: No such file or directory
+		
+		$ cat file_test 4>&1 1>&2 2>&4 | grep 'No such'
+		cat: file_test: No such file or directory
 
 	</details>
 
@@ -165,8 +165,8 @@
 	<details>
 	<summary>Ответ</summary>
 
-	Команда 'cat /proc/$$/environ' выводит переменные окружения, с которыми была запущена текущая сессия bash.
-	Аналогичной командой може быть 'env'
+		Команда 'cat /proc/$$/environ' выводит переменные окружения, с которыми была запущена текущая сессия bash.
+		Аналогичной командой може быть 'env'
 
 	</details>
 
@@ -176,19 +176,19 @@
 	<details>
 	<summary>Ответ</summary>
 
-		/proc/[pid]/cmdline строка 216 в man proc
-	В этом файле хранится команда процесса, если процесс не явзяется зомби.
-	
-		/proc/[pid]/exe строка 268 в man proc
-	Это символьная ссылка, указывающую на команду, которой запускался данный процесс.
-	
-	Например:
-	Я запустил 'sleep 100':
-	cat /proc/1763/cmdline
-	sleep100
-	
-	ls -l /proc/1763/exe
-	lrwxrwxrwx 1 vagrant vagrant 0 Jan 20 07:27 /proc/1763/exe -> /usr/bin/sleep
+			/proc/[pid]/cmdline строка 216 в man proc
+		В этом файле хранится команда процесса, если процесс не явзяется зомби.
+		
+			/proc/[pid]/exe строка 268 в man proc
+		Это символьная ссылка, указывающую на команду, которой запускался данный процесс.
+		
+		Например:
+		Я запустил 'sleep 100':
+		cat /proc/1763/cmdline
+		sleep100
+		
+		ls -l /proc/1763/exe
+		lrwxrwxrwx 1 vagrant vagrant 0 Jan 20 07:27 /proc/1763/exe -> /usr/bin/sleep
 
 	</details>
 
@@ -198,9 +198,9 @@
 	<details>
 	<summary>Ответ</summary>
 
-	Ответ: sse4_2
-	grep sse /proc/cpuinfo
-	flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq monitor ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single fsgsbase avx2 invpcid rdseed clflushopt md_clear flush_l1d arch_capabilities
+		Ответ: sse4_2
+		grep sse /proc/cpuinfo
+		flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq monitor ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single fsgsbase avx2 invpcid rdseed clflushopt md_clear flush_l1d arch_capabilities
 
 	</details>
 
@@ -219,7 +219,7 @@
 	<details>
 	<summary>Ответ</summary>
 
-	ssh -t localhost 'tty'
+		ssh -t localhost 'tty'
 
 	</details>
 
@@ -229,7 +229,7 @@
 	<details>
 	<summary>Ответ</summary>
 
-	В сессии 1 запустил команду 'sleep 500', в сессии 2 посмотрел процесс 'ps -ef | grep sleep'. В сессии 3 запустил команду 'reptyr 2552' и через ctrl + c отменил ее выполнение. Процесс sleep завершился в консоле 3.
+		В сессии 1 запустил команду 'sleep 500', в сессии 2 посмотрел процесс 'ps -ef | grep sleep'. В сессии 3 запустил команду 'reptyr 2552' и через ctrl + c отменил ее выполнение. Процесс sleep завершился в консоле 3.
 
 	</details>
 
@@ -239,8 +239,8 @@
 	<details>
 	<summary>Ответ</summary>
 
-	При выполнении команды 'sudo echo string > /root/new_file' sudo применяетмся к команде echo.
-	Во втором случае с привилегиями sudo выполняется команда tee, которая через pipe принимает на вход текст, записывает его в /root/new_file и так же выводит на экран.
+		При выполнении команды 'sudo echo string > /root/new_file' sudo применяетмся к команде echo.
+		Во втором случае с привилегиями sudo выполняется команда tee, которая через pipe принимает на вход текст, записывает его в /root/new_file и так же выводит на экран.
 
 	</details>
 
