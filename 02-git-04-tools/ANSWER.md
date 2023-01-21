@@ -116,6 +116,11 @@
 		
 		# В коммите ниже функция была создана
 		8364383c35 Push plugin discovery down into command package
+		
+		
+		Правки переподователя:
+		Посмотреть историй изменений самой функции globalPluginDirs, а не первой строки её объявляющей.
+		git log -L :globalPluginDirs:plugins.go
 
 	</details>
 	
