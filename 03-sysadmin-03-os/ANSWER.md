@@ -46,20 +46,56 @@
     /bin/bash: ELF 64-bit LSB shared object, x86-64
     ```
     Используя `strace` выясните, где находится база данных `file`, на основании которой она делает свои догадки.
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 3. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
 
 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 5. В iovisor BCC есть утилита `opensnoop`:
     ```bash
     root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
     /usr/sbin/opensnoop-bpfcc
     ```
     На какие файлы вы увидели вызовы группы `open` за первую секунду работы утилиты? Воспользуйтесь пакетом `bpfcc-tools` для Ubuntu 20.04. Дополнительные [сведения по установке](https://github.com/iovisor/bcc/blob/master/INSTALL.md).
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 6. Какой системный вызов использует `uname -a`? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в `/proc`, где можно узнать версию ядра и релиз ОС.
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 7. Чем отличается последовательность команд через `;` и через `&&` в bash? Например:
     ```bash
     root@netology1:~# test -d /tmp/some_dir; echo Hi
@@ -68,11 +104,38 @@
     root@netology1:~#
     ```
     Есть ли смысл использовать в bash `&&`, если применить `set -e`?
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 8. Из каких опций состоит режим bash `set -euxo pipefail` и почему его хорошо было бы использовать в сценариях?
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 9. Используя `-o stat` для `ps`, определите, какой наиболее часто встречающийся статус у процессов в системе. В `man ps` ознакомьтесь (`/PROCESS STATE CODES`) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Ответ ololoololololololololololol
+
+	</details>
+	
+	
 ----
 
 ### Правила приема домашнего задания
