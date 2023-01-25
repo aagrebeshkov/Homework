@@ -139,9 +139,13 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		>> Какой системный вызов использует `uname -a`?
+		execve("/usr/bin/uname", ["uname", "-a"], 0x7ffd75dbfd48 /* 23 vars */) = 0
 		
 		Узнать версию ядра и релиз ОС можно открыв файл /proc/version
+		/proc/sys/kernel/ostype and /proc/sys/kernel/osrelease
+		These files give substrings of /proc/version.
+
 
 	</details>
 	
