@@ -31,7 +31,9 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		$ strace -o trace_cd.out /bin/bash -c 'cd /tmp'
+		$ less trace_cd.out | grep cd
+		execve("/bin/bash", ["/bin/bash", "-c", "cd /tmp"], 0x7ffe2f6240c0 /* 23 vars */) = 0
 
 	</details>
 	
@@ -51,20 +53,50 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		База данных file находится в файле /usr/share/misc/magic.mgc:
+		Из вывода strace:
+		#read(3, "# Magic local data for file(1) c"..., 4096) = 111
+		#read(3, "", 4096)                       = 0
+		#close(3)                                = 0
+		#openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
+		
+		$ file /usr/share/misc/magic.mgc
+		/usr/share/misc/magic.mgc: symbolic link to ../../lib/file/magic.mgc
+		
+		$ file ../../lib/file/magic.mgc
+		../../lib/file/magic.mgc: magic binary file for file(1) cmd (version 14) (little endian)
 
 	</details>
 	
 	
 3. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
+	
+	
+	<details>
+	<summary>Ответ</summary>
 
+		Почистить можно командой: cat /dev/null > /proc/<PID>/fd/1 или echo '' > /proc/<PID>/fd/1
+		До очистки размер 74
+		$ lsof | grep del
+		log_proc. 2474                        vagrant    1w      REG              253,0       74    1323887 /home/vagrant/test_screen.out  deleted)
+		sleep     2513                        vagrant    1w      REG              253,0       74    1323887 /home/vagrant/test_screen.out  deleted)
+		
+		После очистки размер 0
+		$ lsof | grep del
+		log_proc. 2474                        vagrant    1w      REG              253,0        0    1323887 /home/vagrant/test_screen.out  deleted)
+		sleep     2597                        vagrant    1w      REG              253,0        0    1323887 /home/vagrant/test_screen.out  deleted)
+
+
+	</details>
+	
+	
 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
 	
 	
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		Нет. Зомби процезз завершил свою работу.
 
 	</details>
 	
@@ -80,7 +112,23 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		# strace -o trace_bpfcc-tools.out opensnoop-bpfcc
+		
+		# grep open trace_bpfcc-tools.out
+		openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libutil.so.1", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libexpat.so.1", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+		openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+		openat(AT_FDCWD, "/usr/bin/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+		openat(AT_FDCWD, "/usr/pyvenv.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+		openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3
+		...
 
 	</details>
 	
@@ -92,6 +140,8 @@
 	<summary>Ответ</summary>
 
 		Ответ ololoololololololololololol
+		
+		Узнать версию ядра и релиз ОС можно открыв файл /proc/version
 
 	</details>
 	
@@ -109,7 +159,10 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		При запуске `test -d /tmp/some_dir; echo Hi` выполнится сначала первая часть `test -d /tmp/some_dir`, затем вторая `echo Hi`. Вторая команда выполнится после любого завершения первой.
+		При запуске `test -d /tmp/some_dir && echo Hi` выполнятся, если обе команды будут успешные. Т.е. если первая команда выполнится с ошибками, то вторая не будет выполнятся.
+		
+		Если применить `set -e`, то после успешного выполнения команды произойдет выход из системы. Выйти немедленно, если команда завершается с ненулевым статусом.
 
 	</details>
 	
@@ -120,7 +173,11 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		set -e	# Выйти немедленно, если команда завершается с ненулевым статусом
+		set -u	# Директива set -u в начале скрипта выводит ошибку в оболочке, если скрипт запускает неопределенную переменную
+		set -x	# Печатать команды и их аргументы по мере их выполнения
+		set -o	# option-name в данном случае pipefail
+		pipefail	# заставляет возвращать статус выхода последней команды для выхода с ненулевым статусом. Он возвращает ноль, если все команды в завершаются успешно. Эта опция отключена по умолчанию.
 
 	</details>
 	
@@ -131,10 +188,16 @@
 	<details>
 	<summary>Ответ</summary>
 
-		Ответ ololoololololololololololol
+		$ ps -o stat
+		STAT
+		Ss
+		R+
+		
+		S - прерывистый сон (ожидание завершения события)
+		s - является лидером сессии
 
 	</details>
-	
+	<details>
 	
 ----
 
