@@ -32,8 +32,8 @@
 	<summary>Ответ</summary>
 
 		$ strace -o trace_cd.out /bin/bash -c 'cd /tmp'
-		$ less trace_cd.out | grep cd
-		execve("/bin/bash", ["/bin/bash", "-c", "cd /tmp"], 0x7ffe2f6240c0 /* 23 vars */) = 0
+		Системный вызов:
+		chdir("/tmp")                           = 0
 
 	</details>
 	
