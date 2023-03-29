@@ -188,22 +188,11 @@
 	<details>
 	<summary>Ответ</summary>
 
-		# unshare -f --pid --mount-proc /bin/bash
-		# ps aux
-		USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-		root           1  0.0  0.3   7236  3868 pts/1    S    21:01   0:00 /bin/bash
-		root           8  0.0  0.3   8888  3340 pts/1    R+   21:01   0:00 ps aux
-		# sleep 1h
+		# unshare -f --pid --mount-proc /bin/sleep 1h
+		# ps -ef | grep sleep
+		root        1093       1  0 11:01 pts/1    00:00:00 /bin/sleep 1h
+		root        1207    1050  0 11:10 pts/0    00:00:00 grep --color=auto sleep 
 		
-		В соседней сессии:
-		# nsenter --target 2855 --pid --mount
-		# ps aux
-		USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-		root           1  0.0  0.3   7236  3956 pts/1    S    21:01   0:00 /bin/bash
-		root           9  0.0  0.4   7360  4016 pts/2    S    21:03   0:00 -bash
-		root          22  0.0  0.0   5476   580 pts/1    S+   21:03   0:00 sleep 1h
-		root          23  0.0  0.3   8888  3380 pts/2    R+   21:03   0:00 ps aux
-
 	</details>
 
 7. Найдите информацию о том, что такое `:(){ :|:& };:`. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (**это важно, поведение в других ОС не проверялось**). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов `dmesg` расскажет, какой механизм помог автоматической стабилизации.  
