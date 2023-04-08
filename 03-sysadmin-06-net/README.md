@@ -39,16 +39,17 @@ HOST: stackoverflow.com
 [press enter]
 [press enter]
 ```
+
 *В ответе укажите полученный HTTP код, что он означает?*
-    
-    <details>
-    <summary>Ответ</summary>
 
-        HTTP/1.1 403 Forbidden
-    	Доступ запрещен
+<details>
+<summary>Ответ</summary>
 
-    </details>
-    
+	HTTP/1.1 403 Forbidden
+	Доступ запрещен
+
+</details>
+
 2. Повторите задание 1 в браузере, используя консоль разработчика F12.
 - откройте вкладку `Network`
 - отправьте запрос http://stackoverflow.com
@@ -71,7 +72,7 @@ HOST: stackoverflow.com
 		Дольше всего обрабатывался первый GET запрос - 303 ms
 
     </details>
-    
+
 3. Какой IP адрес у вас в интернете?
     
     <details>
