@@ -183,9 +183,6 @@ show bgp x.x.x.x/32
 <summary>Ответ</summary>
 
 ![Network schema](https://github.com/aagrebeshkov/Homework/blob/main/03-sysadmin-08-net/Network_schema.png)
-    <image src="/Network_schema.png" alt="Network schema">
-    ![Текст с описанием картинки](https://picsum.photos/800/600)
-    <image src="https://picsum.photos/800/600" alt="Описание картинки">
 
 </details>
 
