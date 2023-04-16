@@ -189,6 +189,8 @@ show bgp x.x.x.x/32
     ![Network schema](Network_schema.png)
     ![Network schema](/Network_schema.png)
     <image src="/Network_schema.png" alt="Network schema">
+    ![Текст с описанием картинки](https://picsum.photos/800/600)
+    <image src="https://picsum.photos/800/600" alt="Описание картинки">
 
 </details>
 
