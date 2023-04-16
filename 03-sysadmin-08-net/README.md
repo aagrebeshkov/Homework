@@ -188,6 +188,7 @@ show bgp x.x.x.x/32
     ![Network schema](03-sysadmin-08-net/Network_schema.png)
     ![Network schema](Network_schema.png)
     ![Network schema](/Network_schema.png)
+    <image src="/Network_schema.png" alt="Network schema">
 
 </details>
 
