@@ -39,39 +39,39 @@ show bgp x.x.x.x/32
 <details>
 <summary>Ответ</summary>
 
-telnet route-views.routeviews.org
-Username: rviews
-
-route-views>show ip route 92.255.211.2
-Routing entry for 92.255.208.0/22
-  Known via "bgp 6447", distance 20, metric 0
-  Tag 3267, type external
-  Last update from 194.85.40.15 14:49:30 ago
-  Routing Descriptor Blocks:
-  * 194.85.40.15, from 194.85.40.15, 14:49:30 ago
-      Route metric is 0, traffic share count is 1
-      AS Hops 3
-      Route tag 3267
-      MPLS label: none
-
-route-views>show bgp 92.255.211.2        
-BGP routing table entry for 92.255.208.0/22, version 2797107761
-Paths: (20 available, best #6, table default)
-  Not advertised to any peer
-  Refresh Epoch 1
-  20912 3257 1299 9049 52207
-    212.66.96.126 from 212.66.96.126 (212.66.96.126)
-      Origin IGP, localpref 100, valid, external
-      Community: 3257:8066 3257:30055 3257:50001 3257:53900 3257:53902 20912:65004
-      path 7FE0AC395670 RPKI State not found
-      rx pathid: 0, tx pathid: 0
-  Refresh Epoch 1
-  3549 3356 9002 9002 9002 9002 9002 9049 52207
-    208.51.134.254 from 208.51.134.254 (67.16.168.191)
-      Origin IGP, metric 0, localpref 100, valid, external
-      Community: 3356:2 3356:22 3356:100 3356:123 3356:503 3356:903 3356:2067 3549:2581 3549:30840
-      path 7FE15CC8D4A0 RPKI State not found
-      rx pathid: 0, tx pathid: 0
+    telnet route-views.routeviews.org
+    Username: rviews
+    
+    route-views>show ip route 92.255.211.2
+    Routing entry for 92.255.208.0/22
+      Known via "bgp 6447", distance 20, metric 0
+      Tag 3267, type external
+      Last update from 194.85.40.15 14:49:30 ago
+      Routing Descriptor Blocks:
+      * 194.85.40.15, from 194.85.40.15, 14:49:30 ago
+          Route metric is 0, traffic share count is 1
+          AS Hops 3
+          Route tag 3267
+          MPLS label: none
+    
+    route-views>show bgp 92.255.211.2        
+    BGP routing table entry for 92.255.208.0/22, version 2797107761
+    Paths: (20 available, best #6, table default)
+      Not advertised to any peer
+      Refresh Epoch 1
+      20912 3257 1299 9049 52207
+        212.66.96.126 from 212.66.96.126 (212.66.96.126)
+          Origin IGP, localpref 100, valid, external
+          Community: 3257:8066 3257:30055 3257:50001 3257:53900 3257:53902 20912:65004
+          path 7FE0AC395670 RPKI State not found
+          rx pathid: 0, tx pathid: 0
+      Refresh Epoch 1
+      3549 3356 9002 9002 9002 9002 9002 9049 52207
+        208.51.134.254 from 208.51.134.254 (67.16.168.191)
+          Origin IGP, metric 0, localpref 100, valid, external
+          Community: 3356:2 3356:22 3356:100 3356:123 3356:503 3356:903 3356:2067 3549:2581 3549:30840
+          path 7FE15CC8D4A0 RPKI State not found
+          rx pathid: 0, tx pathid: 0
 
 </details>
 
@@ -182,7 +182,7 @@ Paths: (20 available, best #6, table default)
 <details>
 <summary>Ответ</summary>
 
-    ololololololololololololololololololololololol
+    ![Network schema](https://github.com/aagrebeshkov/Homework/blob/main/03-sysadmin-08-net/Network_schema.png)
 
 </details>
 
