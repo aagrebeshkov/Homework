@@ -187,6 +187,7 @@ show bgp x.x.x.x/32
     ![](https://github.com/aagrebeshkov/Homework/raw/main/03-sysadmin-08-net/Network_schema.png)
     ![Network schema](03-sysadmin-08-net/Network_schema.png)
     ![Network schema](Network_schema.png)
+    ![Network schema](/Network_schema.png)
 
 </details>
 
