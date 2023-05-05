@@ -263,6 +263,7 @@
         
         Device     Boot Start     End Sectors Size Id Type
         /dev/sdc1        2048 4196351 4194304   2G 83 Linux
+        /dev/sdc2       4196352 5242879 1046528  511M 83 Linux
         ```
 
     </details>
@@ -530,7 +531,50 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # umount /dev/md126
+        # pvcreate /dev/md126
+          WARNING: xfs signature detected on /dev/md126 at offset 0. Wipe it? [y/n]: y
+          Wiping xfs signature on /dev/md126.
+          Physical volume "/dev/md126" successfully created.
+
+        # umount /dev/md127
+        # pvcreate /dev/md127
+          WARNING: xfs signature detected on /dev/md127 at offset 0. Wipe it? [y/n]: y
+          Wiping xfs signature on /dev/md127.
+          Physical volume "/dev/md127" successfully created.
+
+        Просмотр physical volume:
+        # pvs
+          PV         VG        Fmt  Attr PSize    PFree   
+          /dev/md126           lvm2 ---    <2.00g   <2.00g
+          /dev/md127           lvm2 ---  1018.00m 1018.00m
+          /dev/sda3  ubuntu-vg lvm2 a--   <62.00g   31.00g
+        
+        # pvdisplay /dev/md126
+          "/dev/md126" is a new physical volume of "<2.00 GiB"
+          --- NEW Physical volume ---
+          PV Name               /dev/md126
+          VG Name               
+          PV Size               <2.00 GiB
+          Allocatable           NO
+          PE Size               0   
+          Total PE              0
+          Free PE               0
+          Allocated PE          0
+          PV UUID               5KCXdL-vL7L-60ze-tJi4-CnkI-dFOL-GWIZW4
+        
+        # pvdisplay /dev/md127
+          "/dev/md127" is a new physical volume of "1018.00 MiB"
+          --- NEW Physical volume ---
+          PV Name               /dev/md127
+          VG Name               
+          PV Size               1018.00 MiB
+          Allocatable           NO
+          PE Size               0   
+          Total PE              0
+          Free PE               0
+          Allocated PE          0
+          PV UUID               s7ZzbL-5YIz-9HtE-pTVg-CQxE-r8gS-KaSiRC
 
     </details>
     
@@ -539,7 +583,36 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # vgcreate vgmd /dev/md127 /dev/md126
+          Volume group "vgmd" successfully created
+
+        Посмотреть volume group:
+        # vgs
+          VG        #PV #LV #SN Attr   VSize   VFree 
+          ubuntu-vg   1   1   0 wz--n- <62.00g 31.00g
+          vgmd        2   0   0 wz--n-  <2.99g <2.99g
+
+        # vgdisplay vgmd
+          --- Volume group ---
+          VG Name               vgmd
+          System ID             
+          Format                lvm2
+          Metadata Areas        2
+          Metadata Sequence No  1
+          VG Access             read/write
+          VG Status             resizable
+          MAX LV                0
+          Cur LV                0
+          Open LV               0
+          Max PV                0
+          Cur PV                2
+          Act PV                2
+          VG Size               <2.99 GiB
+          PE Size               4.00 MiB
+          Total PE              765
+          Alloc PE / Size       0 / 0   
+          Free  PE / Size       765 / <2.99 GiB
+          VG UUID               ge6zdO-t34Q-blKh-9MAa-xRXU-oP1q-thUaFP
 
     </details>
     
@@ -548,7 +621,33 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        После перезапуска ВМ RAID переименовался, смотрю как сейчас называется RAID0:
+        # lsblk
+        NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+        loop0                       7:0    0   62M  1 loop  /snap/core20/1611
+        loop1                       7:1    0 91.9M  1 loop  /snap/lxd/24061
+        loop2                       7:2    0   47M  1 loop  /snap/snapd/16292
+        loop3                       7:3    0 67.8M  1 loop  /snap/lxd/22753
+        loop4                       7:4    0 63.3M  1 loop  /snap/core20/1879
+        sda                         8:0    0   64G  0 disk  
+        ├─sda1                      8:1    0    1M  0 part  
+        ├─sda2                      8:2    0    2G  0 part  /boot
+        └─sda3                      8:3    0   62G  0 part  
+          └─ubuntu--vg-ubuntu--lv 253:0    0   31G  0 lvm   /
+        sdb                         8:16   0  2.5G  0 disk  
+        ├─sdb1                      8:17   0    2G  0 part  
+        │ └─md126                   9:126  0    2G  0 raid1 
+        └─sdb2                      8:18   0  511M  0 part  
+          └─md127                   9:127  0 1018M  0 raid0 
+        sdc                         8:32   0  2.5G  0 disk  
+        ├─sdc1                      8:33   0    2G  0 part  
+        │ └─md126                   9:126  0    2G  0 raid1 
+        └─sdc2                      8:34   0  511M  0 part  
+          └─md127                   9:127  0 1018M  0 raid0 
+
+        Создаю LV:
+        # lvcreate -L 100M -n lvmd vgmd /dev/md127
+          Logical volume "lvmd" created.
 
     </details>
     
@@ -557,7 +656,19 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # mkfs.xfs /dev/vgmd/lvmd 
+        log stripe unit (524288 bytes) is too large (maximum is 256KiB)
+        log stripe unit adjusted to 32KiB
+        meta-data=/dev/vgmd/lvmd         isize=512    agcount=4, agsize=6272 blks
+                 =                       sectsz=512   attr=2, projid32bit=1
+                 =                       crc=1        finobt=1, sparse=1, rmapbt=0
+                 =                       reflink=1
+        data     =                       bsize=4096   blocks=25088, imaxpct=25
+                 =                       sunit=128    swidth=256 blks
+        naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+        log      =internal log           bsize=4096   blocks=1416, version=2
+                 =                       sectsz=512   sunit=8 blks, lazy-count=1
+        realtime =none                   extsz=4096   blocks=0, rtextents=0
 
     </details>
     
@@ -566,7 +677,12 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # mkdir /mnt_new
+        # mount /dev/vgmd/lvmd /mnt_new
+
+        # df -h
+        ...
+        /dev/mapper/vgmd-lvmd               93M  5.9M   87M   7% /mnt_new
 
     </details>
     
@@ -575,7 +691,7 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /mnt_new/test.gz
 
     </details>
     
@@ -584,7 +700,30 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # lsblk
+        NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+        loop0                       7:0    0   62M  1 loop  /snap/core20/1611
+        loop1                       7:1    0 91.9M  1 loop  /snap/lxd/24061
+        loop2                       7:2    0   47M  1 loop  /snap/snapd/16292
+        loop3                       7:3    0 67.8M  1 loop  /snap/lxd/22753
+        loop4                       7:4    0 63.3M  1 loop  /snap/core20/1879
+        sda                         8:0    0   64G  0 disk  
+        ├─sda1                      8:1    0    1M  0 part  
+        ├─sda2                      8:2    0    2G  0 part  /boot
+        └─sda3                      8:3    0   62G  0 part  
+          └─ubuntu--vg-ubuntu--lv 253:0    0   31G  0 lvm   /
+        sdb                         8:16   0  2.5G  0 disk  
+        ├─sdb1                      8:17   0    2G  0 part  
+        │ └─md126                   9:126  0    2G  0 raid1 
+        └─sdb2                      8:18   0  511M  0 part  
+          └─md127                   9:127  0 1018M  0 raid0 
+            └─vgmd-lvmd           253:1    0  100M  0 lvm   /mnt_new
+        sdc                         8:32   0  2.5G  0 disk  
+        ├─sdc1                      8:33   0    2G  0 part  
+        │ └─md126                   9:126  0    2G  0 raid1 
+        └─sdc2                      8:34   0  511M  0 part  
+          └─md127                   9:127  0 1018M  0 raid0 
+            └─vgmd-lvmd           253:1    0  100M  0 lvm   /mnt_new
 
     </details>
     
@@ -599,7 +738,9 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # gzip -t /mnt_new/test.gz
+        # echo $?
+        0
 
     </details>
     
@@ -608,7 +749,7 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # pvmove -b /dev/md127 /dev/md126
 
     </details>
     
@@ -617,7 +758,8 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # mdadm --manage /dev/md126 --fail /dev/sdb1
+        mdadm: set /dev/sdb1 faulty in /dev/md126
 
     </details>
     
@@ -626,7 +768,10 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # dmesg
+        [ 2131.067934] md/raid1:md126: Disk failure on sdb1, disabling device.
+               md/raid1:md126: Operation continuing on 1 devices.
+        [ 2140.720858] [drm:drm_atomic_helper_wait_for_dependencies [drm_kms_helper]] *ERROR* [CRTC:38:crtc-0] flip_done timed out
 
     </details>
     
@@ -641,7 +786,9 @@
     <details>
     <summary>Ответ</summary>
 
-        ololololololololololololololololololololol
+        # gzip -t /mnt_new/test.gz
+        # echo $?
+        0
 
     </details>
     
