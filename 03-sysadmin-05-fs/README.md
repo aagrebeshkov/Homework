@@ -82,21 +82,21 @@
 <details>
 <summary>Ответ</summary>
 
-    Вижу два добавленных диска:
-    ```bash
-    # fdisk -l
-    Disk /dev/sdb: 2.51 GiB, 2684354560 bytes, 5242880 sectors
-    Disk model: VBOX HARDDISK
-    Units: sectors of 1 * 512 = 512 bytes
-    Sector size (logical/physical): 512 bytes / 512 bytes
-    I/O size (minimum/optimal): 512 bytes / 512 bytes
-    
-    Disk /dev/sdc: 2.51 GiB, 2684354560 bytes, 5242880 sectors
-    Disk model: VBOX HARDDISK
-    Units: sectors of 1 * 512 = 512 bytes
-    Sector size (logical/physical): 512 bytes / 512 bytes
-    I/O size (minimum/optimal): 512 bytes / 512 bytes
-    ```
+Вижу два добавленных диска:
+```bash
+# fdisk -l
+Disk /dev/sdb: 2.51 GiB, 2684354560 bytes, 5242880 sectors
+Disk model: VBOX HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+Disk /dev/sdc: 2.51 GiB, 2684354560 bytes, 5242880 sectors
+Disk model: VBOX HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+```
 
     ```bash
     # fdisk /dev/sdb
