@@ -44,9 +44,9 @@ e=$(($a+$b))
 
 | Переменная  | Значение | Обоснование |
 | ------------- | ------------- | ------------- |
-| `c`  | ???  | ??? |
-| `d`  | ???  | ??? |
-| `e`  | ???  | ??? |
+| `c`  | a+b  | Переменные a и b объявлены без использования declare, а операция a+b выполненна без двойных скобок |
+| `d`  | 1+2  | Т.к. перед a и b указан знак $, значит bash принимает значение переменной a и b (их значения объявлены в первых двух строчках скрипта). Операция сложения выполненна без двойных скобок, значи bash принимает это выражение как строку |
+| `e`  | 3  | Операция сложения выполненна с использованием двойных скобок, значи bash принимает это переменную a и переменную b как число и выполняет операцию сложения |
 
 ----
 
@@ -70,7 +70,16 @@ done
 ### Ваш скрипт:
 
 ```bash
-???
+while ((1==1)
+do
+	curl https://localhost:4757
+	if (($? != 0))
+	then
+		date >> curl.log
+	else
+		break
+	fi
+done
 ```
 
 ---
@@ -82,7 +91,23 @@ done
 ### Ваш скрипт:
 
 ```bash
-???
+#!/usr/bin/env bash
+array_ip=(192.168.0.1 173.194.222.113 87.250.250.242)
+for i in {1..5}
+do
+	for i in ${array_ip[@]}
+	do
+		curl --connect-timeout 5 https://$i:80
+		if (($? != 0))
+		then
+			(date '+%Y-%m-%d %H:%M:%S'; echo "Service $i is unavailable") | tr -s '\r\n' ' ' >> log
+			echo '' >> log
+		else
+			(date '+%Y-%m-%d %H:%M:%S'; echo "Service $i available") | tr -s '\r\n' ' ' >> log
+			echo '' >> log
+		fi
+	done
+done
 ```
 
 ---
@@ -93,7 +118,22 @@ done
 ### Ваш скрипт:
 
 ```bash
-???
+#!/usr/bin/env bash
+array_ip=(192.168.0.1 173.194.222.113 87.250.250.242)
+while ((1==1))
+do
+	for i in ${array_ip[@]}
+	do
+		curl --connect-timeout 5 https://$i:80
+		if (($? != 0))
+	    	then
+				(date '+%Y-%m-%d %H:%M:%S'; echo "Service $i is unavailable") | tr -s '\r\n' ' ' >> error
+				echo '' >> error
+			else
+				break
+		fi
+	done
+done
 ```
 
 ---
@@ -108,7 +148,21 @@ ____
 ### Ваш скрипт:
 
 ```bash
-???
+#!/bin/bash
+count=$(cat "$1" | wc -m)
+commitRegex='^(\[\d{2}-[a-zA-Z]+|merge)(-\d{2}-[a-zA-Z]+|merge)(\])'
+if [[ $count -lt 1 ]] || [[ $count -gt 31 ]]
+then
+        echo "The number of characters must be no more than 30"
+        exit 1
+else
+        if ! grep -qE "$commitRegex" "$1"; then
+                echo "Aborting according commit message policy. Please specify [XX-name_module-XX-topic]."
+                exit 1
+#       else
+#               echo "OK"
+        fi
+fi
 ```
 
 ----
