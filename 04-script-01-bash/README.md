@@ -57,7 +57,7 @@ e=$(($a+$b))
 В скрипте допущена ошибка, из-за которой выполнение не может завершиться, при этом место на жёстком диске постоянно уменьшается. Что необходимо сделать, чтобы его исправить:
 
 ```bash
-while ((1==1)
+while ((1==1))
 do
 	curl https://localhost:4757
 	if (($? != 0))
@@ -70,7 +70,7 @@ done
 ### Ваш скрипт:
 
 ```bash
-while ((1==1)
+while ((1==1))
 do
 	curl https://localhost:4757
 	if (($? != 0))
@@ -129,6 +129,7 @@ do
 	    	then
 				(date '+%Y-%m-%d %H:%M:%S'; echo "Service $i is unavailable") | tr -s '\r\n' ' ' >> error
 				echo '' >> error
+				sleep 5
 			else
 				break
 		fi
