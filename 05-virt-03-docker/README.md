@@ -48,25 +48,32 @@ Hey, Netology
 <details>
 <summary>Ответ</summary>
 Dockerfile с сожержимым:
-	
+
 	FROM nginx
 	COPY index.html /usr/share/nginx/html
 
-# docker build -t mynginx .
-# docker run --name mynginx -d -p 8080:80 mynginx
-# curl http://localhost:8080
-	<html>
-	<head>
-	Hey, Netology
-	</head>
-	<body>
-	<h1>I’m DevOps Engineer!</h1>
-	</body>
-	</html>
+Собираем контейнер:
 
-# docker login --username aagrebeshkov
-# docker tag mynginx aagrebeshkov/mynginx-repo
-# docker push aagrebeshkov/mynginx-repo
+	# docker build -t mynginx .
+	# docker run --name mynginx -d -p 8080:80 mynginx
+
+Проверяем nginx:
+
+	# curl http://localhost:8080
+		<html>
+		<head>
+		Hey, Netology
+		</head>
+		<body>
+		<h1>I’m DevOps Engineer!</h1>
+		</body>
+		</html>
+
+Загружаем образ в репозиторий:
+
+	# docker login --username aagrebeshkov
+	# docker tag mynginx aagrebeshkov/mynginx-repo
+	# docker push aagrebeshkov/mynginx-repo
 
 https://hub.docker.com/repositories/aagrebeshkov
 
