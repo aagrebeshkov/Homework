@@ -38,9 +38,9 @@ c = a + b
 
 | Вопрос  | Ответ |
 | ------------- | ------------- |
-| Какое значение будет присвоено переменной `c`?  | ???  |
-| Как получить для переменной `c` значение 12?  | ???  |
-| Как получить для переменной `c` значение 3?  | ???  |
+| Какое значение будет присвоено переменной `c`?  | Значение присвоено не будет, т.к. сложение типа int и str не возможно |
+| Как получить для переменной `c` значение 12?  | Значение 12 для переменной 'с' будет, если в переменной 'a' присвоить строку: "a = '1'" |
+| Как получить для переменной `c` значение 3?  | Значение 3 для переменной 'с' будет, если в переменной 'b' присвоить число: "b = 2" |
 
 ------
 
@@ -68,13 +68,29 @@ for result in result_os.split('\n'):
 ### Ваш скрипт:
 
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+
+bash_command = "cd ~/Documents/Git/project/Homework; git status"
+result_os = os.popen(bash_command).read()
+
+work_dir = os.popen("cd ~/Documents/Git/project/Homework; pwd").read()
+print("work dir: ", work_dir)
+
+for result in result_os.split('\n'):
+    if result.find('изменено') != -1:
+        prepare_result = result.replace('\tизменено:   ', '')
+        print(prepare_result)
 ```
 
 ### Вывод скрипта при запуске во время тестирования:
 
 ```
-???
+work dir:  /Users/aleksandrgrebeshkov/Documents/Git/project/Homework
+
+   04-script-02-py/README.md
+   04-script-03-yaml/README.md
 ```
 
 ------
@@ -86,13 +102,45 @@ for result in result_os.split('\n'):
 ### Ваш скрипт:
 
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+import sys
+
+if len(sys.argv) == 1:                          # Проверка на наличие параметра
+    path_repos = os.popen('pwd').read()         # Если параметра нет, то звпускаем git status в текущей директории
+    bash_command = "git status"
+else:
+    path_repos = sys.argv[1]                    # Если параметр есть, то переходим в нее и выполняем git status
+    change_dir = 'cd ' + path_repos
+    bash_command = change_dir + '; ' + "git status"
+
+result_os = os.popen(bash_command).read()
+print("Work dir:", path_repos)
+
+for result in result_os.split('\n'):
+    if result.find('изменено') != -1:
+        prepare_result = result.replace('\tизменено:   ', '')
+        print(prepare_result)
+    elif result.find('нечего коммитить') != -1:
+        print("No modified files")
 ```
 
 ### Вывод скрипта при запуске во время тестирования:
 
 ```
-???
+% python3 modifGit.py                                 
+fatal: не найден git репозиторий (или один из родительских каталогов): .git
+Work dir: /Users/aleksandrgrebeshkov/Documents/tmp/python
+
+% python3 modifGit.py ~/Documents/Git/project/Homework
+Work dir: /Users/aleksandrgrebeshkov/Documents/Git/project/Homework
+   04-script-02-py/README.md
+   04-script-03-yaml/README.md
+
+% python3 modifGit.py ~/Documents/Git/project/Vagrant
+Work dir: /Users/aleksandrgrebeshkov/Documents/Git/project/Vagrant
+No modified files
 ```
 
 ------
@@ -114,13 +162,64 @@ for result in result_os.split('\n'):
 ### Ваш скрипт:
 
 ```python
-???
+#!/usr/bin/env python3
+
+import socket
+
+service_list = {
+        "drive.google.com": "127.0.0.1",
+        "mail.google.com": "127.0.0.1",
+        "google.com": "127.0.0.1",
+}
+past_list = {}
+
+### Получаем ip и обновляем словарь service_list 
+for host in service_list:
+    # print(host)
+    # print(socket.gethostbyname(host))
+    current_ip=socket.gethostbyname(host)           # выведет ip
+    print(host, "-", current_ip)
+    service_list[host] = current_ip                 # Обновит значение ключа в словаре
+
+### Считываем данные из файла в словарь
+for i in open("ip_list_past.txt"):
+    i = i.strip()                  # Удалит перенос строк у всех элементов
+    row = i.split(', ')            # строка преобразуется в список слов
+    #row[1] = int(row[1])          # Второй элемент преобразуется в вещественное число
+    #print(row[1])
+    #products[row[0]] = row[1:]    # В словарь добавляется пара ключ-значение. Ключом является первый элемент списка. Значением будет второй элемент списка
+    past_list[row[0]] = row[1]
+#print(past_list)
+
+### Сраваем два словаря
+for i in service_list:
+    if (service_list[i] != past_list[i]):
+        print('')
+        print('[ERROR]', i, 'IP mismatch:', past_list[i], service_list[i])
+
+### Записываем текущий IP в файл ip_list_past.txt
+file = open("ip_list_past.txt", "w")                  # открываем файл на запись
+for key, value in service_list.items():
+  file.write(f'{key}, {value}\n')                     # записываем словарь в файл через запятую
+file.close()
 ```
 
 ### Вывод скрипта при запуске во время тестирования:
 
 ```
-???
+Проверка без смены IP:
+$ python3 task_4.py 
+drive.google.com - 64.233.164.194
+mail.google.com - 216.58.210.165
+google.com - 216.58.210.174
+
+Проверка после смены IP:
+$ python3 task_4.py 
+drive.google.com - 64.233.164.194
+mail.google.com - 216.58.209.165
+google.com - 216.58.210.174
+
+[ERROR] mail.google.com IP mismatch: 216.58.210.265 216.58.209.165
 ```
 
 ------
