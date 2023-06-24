@@ -328,18 +328,18 @@ socket=/var/run/mysqld/mysqld.sock
 !includedir /etc/mysql/conf.d/
 ```
 
-- скорость IO важнее сохранности данных;
-    изменить innodb_flush_method = O_DSYNC
+- скорость IO важнее сохранности данных;<br>
+    изменить innodb_flush_method = O_DSYNC<br>
     Проверить: show variables like 'innodb_flush_method';
-- нужна компрессия таблиц для экономии места на диске; 
-    innodb_file_per_table = 1
+- нужна компрессия таблиц для экономии места на диске; <br>
+    innodb_file_per_table = 1<br>
     Проверить: show variables like 'innodb_file_per_table';
-- размер буффера с незакомиченными транзакциями 1 Мб;
+- размер буффера с незакомиченными транзакциями 1 Мб;<br>
     innodb_log_buffer_size = 1M
-- буффер кеширования 30% от ОЗУ;
+- буффер кеширования 30% от ОЗУ;<br>
     innodb_buffer_pool_size
-- размер файла логов операций 100 Мб.
-    увеличить innodb_log_file_size = 100M
+- размер файла логов операций 100 Мб.<br>
+    увеличить innodb_log_file_size = 100M<br>
     Проверить: SHOW GLOBAL VARIABLES LIKE '%innodb_log%';
 
 </details>
