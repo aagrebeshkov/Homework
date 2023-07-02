@@ -89,7 +89,7 @@ pushgateway    /bin/pushgateway                 Up             9091/tcp
 
 - скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже.
 <p align="center">
-  <img width="1200" height="600" src="./assets/yc_02.png">
+  <img width="1200" height="600" src="https://github.com/aagrebeshkov/Homework/blob/main/05-virt-04-docker-compose/images/yc_02.png">
 </p>
 
 <details>
