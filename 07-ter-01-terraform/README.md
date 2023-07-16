@@ -87,10 +87,10 @@ resource "docker_container" "nginx" {
 }
 ```
 Ошибки:
-  3.1 У ресурса "docker_image" не было параметра name
-  3.2 В ресурсе "docker_container" была допащена ошибка "1nginx"
-  3.3 В Ресурсе названии ресурса "random_password" была ошибка "random_string_fake"
-  3.4 У параметра name было "resuld" вместо "result"
+  - У ресурса "docker_image" не было параметра name
+  - В ресурсе "docker_container" была допащена ошибка "1nginx"
+  - В Ресурсе названии ресурса "random_password" была ошибка "random_string_fake"
+  - У параметра name было "resuld" вместо "result"
 <br><br>
 
 4. Выполните код. В качестве ответа приложите вывод команды ```docker ps```
