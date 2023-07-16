@@ -36,12 +36,13 @@
 
 <details>
 <summary>Ответ</summary>
-- Изучите файл **.gitignore**. В каком terraform файле согласно этому .gitignore допустимо сохранить личную, секретную информацию?
-В файле personal.auto.tfvars
-<br>
 
-- Выполните код проекта. Найдите  в State-файле секретное содержимое созданного ресурса **random_password**, пришлите в качестве ответа конкретный ключ и его значение.
-Ключ - random_string
+1. Изучите файл **.gitignore**. В каком terraform файле согласно этому .gitignore допустимо сохранить личную, секретную информацию?<br>
+В файле personal.auto.tfvars
+<br><br>
+
+2. Выполните код проекта. Найдите  в State-файле секретное содержимое созданного ресурса **random_password**, пришлите в качестве ответа конкретный ключ и его значение.<br>
+Ключ - random_string<br>
 Значение:
 ```bash
         {
@@ -64,8 +65,9 @@
             "upper": true
           },
 ```
+<br><br>
 
-- Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла **main.tf**. Выполните команду ```terraform validate```. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.
+3. Раскомментируйте блок кода, примерно расположенный на строчках 29-42 файла **main.tf**. Выполните команду ```terraform validate```. Объясните в чем заключаются намеренно допущенные ошибки? Исправьте их.<br>
 
 Исправленный код:<br>
 ```bash
@@ -85,22 +87,22 @@ resource "docker_container" "nginx" {
 }
 ```
 Ошибки:
-1. У ресурса "docker_image" не было параметра name
-2. В ресурсе "docker_container" была допащена ошибка "1nginx"
-3. В Ресурсе названии ресурса "random_password" была ошибка "random_string_fake"
-4. У параметра name было "resuld" вместо "result"
-<br>
+  3.1 У ресурса "docker_image" не было параметра name
+  3.2 В ресурсе "docker_container" была допащена ошибка "1nginx"
+  3.3 В Ресурсе названии ресурса "random_password" была ошибка "random_string_fake"
+  3.4 У параметра name было "resuld" вместо "result"
+<br><br>
 
-- Выполните код. В качестве ответа приложите вывод команды ```docker ps```
+4. Выполните код. В качестве ответа приложите вывод команды ```docker ps```
 ```bash
 # docker ps
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
 d83fa895df77   021283c8eb95   "/docker-entrypoint.…"   4 seconds ago   Up 3 seconds   0.0.0.0:8000->80/tcp   example_9Wq8709oeADTEhDt
 ```
-<br>
+<br><br>
 
-- Замените имя docker-контейнера в блоке кода на ```hello_world```, выполните команду ```terraform apply -auto-approve```.
-Объясните своими словами, в чем может быть опасность применения ключа  ```-auto-approve``` ? В качестве ответа дополнительно приложите вывод команды ```docker ps```
+5. Замените имя docker-контейнера в блоке кода на ```hello_world```, выполните команду ```terraform apply -auto-approve```.<br>
+Объясните своими словами, в чем может быть опасность применения ключа  ```-auto-approve``` ? В качестве ответа дополнительно приложите вывод команды ```docker ps```<br>
 
 С применением флага "-auto-approve" terraform не спросит подтверждение на запуск, так можно внести не верные изменения в систему.
 
@@ -109,8 +111,9 @@ d83fa895df77   021283c8eb95   "/docker-entrypoint.…"   4 seconds ago   Up 3 se
 CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
 628dace98806   021283c8eb95   "/docker-entrypoint.…"   7 seconds ago   Up 6 seconds   0.0.0.0:8000->80/tcp   hello_world
 ```
+<br><br>
 
-- Уничтожьте созданные ресурсы с помощью **terraform**. Убедитесь, что все ресурсы удалены. Приложите содержимое файла **terraform.tfstate**. 
+6. Уничтожьте созданные ресурсы с помощью **terraform**. Убедитесь, что все ресурсы удалены. Приложите содержимое файла **terraform.tfstate**. 
 ```bash
 # terraform destroy
 ```
@@ -127,8 +130,9 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
   "check_results": null
 }
 ```
+<br><br>
 
-- Объясните, почему при этом не был удален docker образ **nginx:latest** ? Ответ подкрепите выдержкой из документации провайдера.
+7. Объясните, почему при этом не был удален docker образ **nginx:latest** ? Ответ подкрепите выдержкой из документации провайдера.<br>
 keep_locally (Boolean) If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation.
 
 </details>
@@ -151,6 +155,7 @@ shekeriev.
 <details>
 <summary>Ответ</summary>
 
+План ресурса:
 ```bash
 % terraform plan
 virtualbox_vm.node[0]: Refreshing state... [id=0d6b13af-3026-464b-a4a3-10359caeb6d6]
@@ -176,8 +181,10 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 ```
+<br>
 
-![VM](https://github.com/aagrebeshkov/Homework/blob/main/05-virt-05-docker-swarm/images/VM.png)
+![VM](https://github.com/aagrebeshkov/Homework/blob/main/07-ter-01-terraform/images/VM.png)
+<br>
 
 Содержимое main.tf
 ```bash
@@ -211,6 +218,7 @@ output "IPAddress" {
   value = element(virtualbox_vm.node.*.network_adapter.0.ipv4_address, 1)
 }
 ```
+
 </details>
 
 
