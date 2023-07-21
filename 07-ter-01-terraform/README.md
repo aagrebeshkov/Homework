@@ -42,13 +42,13 @@
 <br><br>
 
 2. Выполните код проекта. Найдите  в State-файле секретное содержимое созданного ресурса **random_password**, пришлите в качестве ответа конкретный ключ и его значение.<br>
-Ключ - random_string<br>
+Ключ - "name": "random_string"<br>
 Значение:
 ```bash
         {
           "schema_version": 3,
           "attributes": {
-            "bcrypt_hash": "$2a$10$jsHefpAah6G0DhZrBgNIIOehjiEBgZ5pSCGVCt4V2Mo/kdleA1cgG",
+            "bcrypt_hash": "$2a$10$aVl33jk.8YrgxtXJMexOr.29WxmScNwtBhPaOTaf.0HTz/UinIukW",
             "id": "none",
             "keepers": null,
             "length": 16,
@@ -60,10 +60,54 @@
             "number": true,
             "numeric": true,
             "override_special": null,
-            "result": "9Wq8709oeADTEhDt",
+            "result": "1azUErr7fVZuzZh0",
+            "special": false,
+            "upper": true
+          }
+```
+<br>
+
+Содержимое terraform.tfstate:
+```bash
+{
+  "version": 4,
+  "terraform_version": "1.5.3",
+  "serial": 1,
+  "lineage": "f9fb7318-94e6-fef8-f767-a2100eb694c8",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "random_password",
+      "name": "random_string",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "bcrypt_hash": "$2a$10$aVl33jk.8YrgxtXJMexOr.29WxmScNwtBhPaOTaf.0HTz/UinIukW",
+            "id": "none",
+            "keepers": null,
+            "length": 16,
+            "lower": true,
+            "min_lower": 1,
+            "min_numeric": 1,
+            "min_special": 0,
+            "min_upper": 1,
+            "number": true,
+            "numeric": true,
+            "override_special": null,
+            "result": "1azUErr7fVZuzZh0",
             "special": false,
             "upper": true
           },
+          "sensitive_attributes": []
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
 ```
 <br><br>
 
