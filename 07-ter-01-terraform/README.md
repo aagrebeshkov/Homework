@@ -45,25 +45,7 @@
 Ключ - "name": "random_string"<br>
 Значение:
 ```bash
-        {
-          "schema_version": 3,
-          "attributes": {
-            "bcrypt_hash": "$2a$10$aVl33jk.8YrgxtXJMexOr.29WxmScNwtBhPaOTaf.0HTz/UinIukW",
-            "id": "none",
-            "keepers": null,
-            "length": 16,
-            "lower": true,
-            "min_lower": 1,
-            "min_numeric": 1,
-            "min_special": 0,
-            "min_upper": 1,
-            "number": true,
-            "numeric": true,
-            "override_special": null,
-            "result": "1azUErr7fVZuzZh0",
-            "special": false,
-            "upper": true
-          }
+"result": "1azUErr7fVZuzZh0",
 ```
 <br>
 
