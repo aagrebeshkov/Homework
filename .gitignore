@@ -6,5 +6,8 @@
 *.tfstate
 *.tfstate.*
 
-# own secret vars store.
+# Own secret vars store.
 personal.auto.tfvars
+
+# Othe files
+.DS_Store
