@@ -33,11 +33,11 @@ variable "vpc_name" {
 
 
 ### SSH Vars
-variable "vms_ssh_root_key" {
-  type        = string
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVDE863aMMMsd7wnCHM7Htpt0NixNimwyGD3Eelmzqn aleksandrgrebeshkov@MBP-Aleksandr"
-  description = "ssh-keygen -t ed25519"
-}
+#variable "vms_ssh_root_key" {
+#  type        = string
+#  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVDE863aMMMsd7wnCHM7Htpt0NixNimwyGD3Eelmzqn aleksandrgrebeshkov@MBP-Aleksandr"
+#  description = "ssh-keygen -t ed25519"
+#}
 
 variable "vms_ssh_root_key_file" {
   type        = string
@@ -47,13 +47,6 @@ variable "vms_ssh_root_key_file" {
 }
 
 ### Parameters VM
-
-#variable "vm_web" {
-#  type        = string
-#  default     = "web-01"
-#  description = "VM Name"
-#}
-
 variable "vm_web_platform_id" {
   type        = string
   default     = "standard-v3"
@@ -78,32 +71,28 @@ variable "vm_web_resources" {
 
 
 ### For_each VM
-variable "vm_resources_back" {
-  description = "vm resources back"
-  type = list(object({
-    vm_name       = string
-    cpu           = number
-    ram           = number
-    disk          = number
-    core_fraction = number
-  }))
-  default = [
-    {
-      vm_name       = "main"
-      cpu           = 4
-      ram           = 2
-      disk          = 6 # * 1024 * 1024 * 1024
-      #disk          = 4194304
-      core_fraction = 20
-    },
-    {
-      vm_name       = "replica"
-      cpu           = 2
-      ram           = 3
-      disk          = 10 # * 1024 * 1024 * 1024
-      core_fraction = 20
-    }
-  ]
+variable "vm_resources_main" {
+  type                   = map(number)
+  default                = {
+    #vm_name       = "main"
+    cpu           = 4
+    ram           = 2
+    disk          = 6
+    core_fraction = 20
+  }
+  description            = "resources VM main"
+}
+
+variable "vm_resources_replica" {
+  type                   = map(number)
+  default                = {
+    #vm_name       = "replica"
+    cpu           = 2
+    ram           = 3
+    disk          = 10
+    core_fraction = 20
+  }
+  description            = "resources VM replica"
 }
 
 ### disk_vm

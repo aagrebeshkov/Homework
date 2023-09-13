@@ -2,9 +2,9 @@ output "web_external_ip" {
   value = [for s in yandex_compute_instance.web[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
 }
 
-output "back_external_ip" {
-  value = [for s in yandex_compute_instance.back[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
-}
+#output "back_external_ip" {
+#  value = [for s in yandex_compute_instance.back[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
+#}
 
 output "storage" {
   value = [for s in yandex_compute_instance.storage[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
@@ -16,9 +16,22 @@ output "map" {
 }
 
 
+#output "storage" {
+#  value = yandex_compute_instance.storage[*].network_interface.0.nat_ip_address
+#}
+
 ### From Terraform console ###
 #[for s in yandex_compute_instance.web[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
 #[for s in yandex_compute_instance.back[*]: "${s.name} = ${s.network_interface.0.nat_ip_address}"]
 
 #yc compute instance list
+
+
+#output "web_external_ip" {
+#  value = yandex_compute_instance.web[*].network_interface.0.nat_ip_address
+#}
+
+#output "back_external_ip" {
+#  value = yandex_compute_instance.back[*].network_interface.0.nat_ip_address
+#}
 

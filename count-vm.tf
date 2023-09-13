@@ -4,6 +4,7 @@ data "yandex_compute_image" "ubuntu" {
 resource "yandex_compute_instance" "web" {
   count       = 2
   name        = "web-${format("%d", count.index + 1)}"
+#  name        = "web-(${count.index}+1)"
   platform_id = var.vm_web_platform_id
   resources {
     cores         = var.vm_web_resources.vm_web_cores
@@ -26,6 +27,6 @@ resource "yandex_compute_instance" "web" {
 
   metadata = {
     serial-port-enable = 1
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    ssh-keys           = "ubuntu:${file("/Users/aleksandrgrebeshkov/.ssh/yacloud.pub")}"
   }
 }

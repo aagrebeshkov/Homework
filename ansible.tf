@@ -39,6 +39,6 @@ depends_on = [
     triggers = {  
       always_run         = "${timestamp()}" #всегда т.к. дата и время постоянно изменяются
       playbook_src_hash  = file("${abspath(path.module)}/test.yml") # при изменении содержимого playbook файла
-      ssh_public_key     = var.vms_ssh_root_key # при изменении переменной
+      ssh_public_key     = "${file("/Users/aleksandrgrebeshkov/.ssh/yacloud.pub")}" # при изменении переменной
     }
 }
