@@ -12,7 +12,6 @@ variable "network_name" {
 
 variable "v4_cidr_blocks" {
   type        = list(string)
-  #default     = ["10.0.1.0/24"]
   default     = null
   description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
 }
