@@ -31,7 +31,6 @@ variable "security_group_ingress" {
   ]
 }
 
-
 variable "security_group_egress" {
   description = "secrules egress"
   type = list(object(
@@ -53,7 +52,6 @@ variable "security_group_egress" {
     }
   ]
 }
-
 
 resource "yandex_vpc_security_group" "example" {
   name       = "example_dynamic"

@@ -6,12 +6,14 @@ ${i["name"]}   ansible_host=${i["network_interface"][0]["nat_ip_address"]}
 %{~ endfor ~}
 
 
+
 [backservers]
 
 %{~ for i in backservers ~}
 
 ${i["name"]}   ansible_host=${i["network_interface"][0]["nat_ip_address"]}
 %{~ endfor ~}
+
 
 
 [storageservers]
