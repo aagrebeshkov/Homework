@@ -14,21 +14,6 @@ provider "yandex" {
   zone      = var.default_zone
 }
 
-
-
-##создаем облачную сеть
-#resource "yandex_vpc_network" "develop" {
-#  name = "develop"
-#}
-#
-##создаем подсеть
-#resource "yandex_vpc_subnet" "develop" {
-#  name           = "develop-ru-central1-a"
-#  zone           = "ru-central1-a"
-#  network_id     = yandex_vpc_network.develop.id
-#  v4_cidr_blocks = ["10.0.1.0/24"]
-#}
-
 #создаем облачную сеть
 module "vpc_network" {
   source         = "./vpc_network"
@@ -55,13 +40,11 @@ module "test-vm" {
 
 }
 
-#Пример передачи cloud-config в ВМ для демонстрации №3
+#Передача cloud-config в ВМ
 data "template_file" "cloudinit" {
  template = file("./cloud-init.yml")
  vars = {
-    #username           = var.username
     ssh_public_key     = file(var.ssh_public_key)
-    #packages           = jsonencode(var.packages)
   }
 }
 
