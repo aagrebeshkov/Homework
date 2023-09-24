@@ -166,8 +166,10 @@ ubuntu                     : ok=3    changed=0    unreachable=0    failed=0    s
 
 6.  Повторите запуск playbook на окружении `prod.yml`. Убедитесь, что выдаются корректные значения для всех хостов.
 <br>
+
 OK
 <br>
+
 
 7. При помощи `ansible-vault` зашифруйте факты в `group_vars/deb` и `group_vars/el` с паролем `netology`.
 
