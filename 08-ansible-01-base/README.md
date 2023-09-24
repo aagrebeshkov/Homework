@@ -49,7 +49,9 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 <br>
+
 some_fact = 12
+<br>
 
 2. Найдите файл с переменными (group_vars), в котором задаётся найденное в первом пункте значение, и поменяйте его на `all default fact`.
 ```bash
@@ -163,6 +165,7 @@ ubuntu                     : ok=3    changed=0    unreachable=0    failed=0    s
 <br>
 
 6.  Повторите запуск playbook на окружении `prod.yml`. Убедитесь, что выдаются корректные значения для всех хостов.
+<br>
 OK
 <br>
 
