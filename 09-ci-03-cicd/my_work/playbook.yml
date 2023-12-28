@@ -1,0 +1,15 @@
+#---
+#- name: test
+#  gather_facts: false
+#  hosts: all
+#  vars:
+#    ansible_user: centos
+#  become: yes
+#  tasks:
+#
+#  - name: Install Nginx Web Server
+#    yum:
+#      name: nginx
+#      state: latest
+#      update_cache: yes
+#
