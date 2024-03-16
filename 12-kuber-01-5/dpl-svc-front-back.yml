@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: frontend-backend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+          name: port-frontend
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+        tier: frontend-backend
+    spec:
+      containers:
+      - name: multitool
+        image: wbitt/network-multitool    # https://github.com/wbitt/Network-MultiTool
+        ports:
+        - containerPort: 8080
+          name: port-backend
+        env:
+          - name: HTTP_PORT
+            value: "8080"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-front-back
+spec:
+  selector:
+    tier: frontend-backend
+  ports:
+    - name: port-frontend
+      port: 9001
+      targetPort: port-frontend
+    - name: port-backend
+      port: 9002
+      targetPort: port-backend
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: microk8s.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-front-back
+                port:
+                  name: port-frontend
+          - path: /api
+            pathType: Exact
+            backend:
+              service:
+                name: svc-front-back
+                port:
+                  name: port-backend
