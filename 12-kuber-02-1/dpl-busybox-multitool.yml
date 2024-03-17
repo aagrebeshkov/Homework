@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dpl-busybox-multitool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-multitool
+  template:
+    metadata:
+      labels:
+        app: busybox-multitool
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ['sh', '-c', 'while true ; do date "+%F %H:%M:%S" >> /etc/log/log_busybox; sleep 5; done']
+        volumeMounts:
+          - name: busybox-volume
+            mountPath: /etc/log
+      - name: multitool
+        image: wbitt/network-multitool
+        volumeMounts:
+          - name: busybox-volume
+            mountPath: /etc/log
+      volumes:
+      - name: busybox-volume
+        hostPath:
+          path: /var/data
